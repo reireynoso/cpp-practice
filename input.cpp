@@ -5,6 +5,38 @@ enum EyeColor {
     Brown, Blue, Green, Gray, Other
 };
 
+ // function that returns value
+ // declare what the return type of the function will be
+ // known as function declaration. it goes before main function
+float sum(float a, float b);
+
+// function that doesn't return value. has to be declared with return type void (nothign)
+void introduceMe(string name, int age = 0); // default parameter
+
+void celebrateBirthday(int* age); // star symbol acccpets the pointer variable
+
+class Car {
+    // In C++ by default, are properties of class are private. If you want to make it public, use public
+    public:
+        string Name;
+        string Color;
+        double Price;
+    
+    // create constructor. does not have return type. constructor has same name as class
+    Car(string name, string color, double price){
+        // assign declared vars to passed params;
+        Name = name;
+        Color = color;
+        Price = price;
+    }
+
+    void getInfo(){
+        cout << "Name: " << Name << endl;
+        cout << "Color: " << Color << endl;
+        cout << "Price: " << Price << endl;
+    }
+};
+
 int main() {
     // to print to the console, use cout.
     // std is a namespace. Standard to include to use the cout command. Unless declared on top
@@ -45,8 +77,8 @@ int main() {
     // CONDITIONS SELECTION
     // executing one part of the code rather than another one depending on a certain condtion
 
-    bool isTodaySunny = false;
-    bool isTodayWeekend = false;
+    // bool isTodaySunny = false;
+    // bool isTodayWeekend = false;
 
     // multiple conditions
     // if(isTodaySunny && isTodayWeekend){
@@ -69,17 +101,99 @@ int main() {
     //     cout << "Go to work" << endl;
     // }
     // switch case
-    EyeColor eyeColor = Brown;
-    switch(eyeColor){
-        case Brown: cout << "80 % of people have Brown eyes" << endl; break; // break once match is found
-        case Blue: cout << "10 % of people have Blue eyes" << endl; break;
-        case Green: cout << "2 % of people have Green eyes" << endl; break;
-        case Gray: cout << "1 % of people have Gray eyes" << endl; break;
-        case Other: cout << "7 % of people have Other eyes" << endl; break;
-        default: cout << "Not valid eye color" << endl;
-    }
+    // EyeColor eyeColor = Brown;
+    // switch(eyeColor){
+    //     case Brown: cout << "80 % of people have Brown eyes" << endl; break; // break once match is found
+    //     case Blue: cout << "10 % of people have Blue eyes" << endl; break;
+    //     case Green: cout << "2 % of people have Green eyes" << endl; break;
+    //     case Gray: cout << "1 % of people have Gray eyes" << endl; break;
+    //     case Other: cout << "7 % of people have Other eyes" << endl; break;
+    //     default: cout << "Not valid eye color" << endl;
+    // }
     // ternary operator
     // isTodaySunny ? cout << "Go to Park" << endl : cout << "Take an umbrella" << endl; 
+    
+    // LOOPS
+    // cout << "WHILE:\n";
+
+    // int counter = 1;
+    // while(counter <= 10){
+    //     cout << counter << endl;
+    //     counter++;
+    // }
+
+    // cout << "DO-WHILE\n";
+    // does first and then checks condition
+    // do{
+    //     cout << counter << endl;
+    //     counter++;
+    // }while(counter <=10);
+
+    // FOR used for when you know in advance how many iterations
+    // string animals[5] = {"cat", "dog", "cow", "goat", "bee"};
+    // for(int i = 0; i < 5; i++){
+    //     cout << animals[i] << endl;
+    // }
+
+    // FUNCTIONS, block of code that is organized and grouped together in way so that it can perform a specific task
+    // NOTE function declaration happens BEFORE main function, function definition happens AFTER main function
+    // To invoke, call function inside of main;
+    // cout << sum(2.2, 5) << endl;
+    // introduceMe("Rei", 13);
+
+    // POINTERS instead of storing a value itself, it stores address of a variable
+    // Ex. an integer variable can store an integer number, a whole number. An integer pointer is going to store an address of an integer variable
+    // TWO common uses of pointers: 1. poitners with functions and 2. pointers with arrays
+    // POINTERS W/ FUNCTIONS
+    // int myAge = 56;
+    // cout << "BEFORE function age: " << myAge << endl; //56
+    // //celebrateBirthday(myAge); //function gets it own copy of the age and doesn't directly mutate the original
+    // celebrateBirthday(&myAge);  // if we want to directly mutate, pass the address of the variable using &. Since we're passing an address, have to receive a pointer in the declaration
+    // cout << "AFTER function age: " << myAge << endl; //56 value does not change
+
+    // POINTERS W/ ARRAYS
+    // int luckyNums[5] = {1,3,5,7,8};
+    // cout << luckyNums << endl; // represents address of the first element
+    // cout << &luckyNums[0] << endl; // print out address of specific index
+
+    // // pointer pointing to int variable
+    // int* luckyPointer= luckyNums; // points to first element address
+    // cout << "Pointing to " << luckyPointer << ", value: " << *luckyPointer << endl;
+    // luckyPointer++;
+    // cout << "Pointing to " << luckyPointer << ", value: " << *luckyPointer << endl;
+
+    // CLASSES
+    // before main function, define a class 
+    Car myCar("Ford", "Red", 50000); // created object of type Car
+    // myCar.Name = "Ford";
+    // myCar.Color = "Red";
+    // myCar.Price = 50000;
+
+    // cout << "Name: " << myCar.Name << endl;
+    // cout << "Color: " << myCar.Color << endl;
+    // cout << "Price: " << myCar.Price << endl;
+
+    // Contructor method called automatically when instances of class is created
+
+    // Class Methods = represent behavior of class which is basically function
+    myCar.getInfo();
     return 0;
     // system("pause>0");
+}
+
+// function definition. comes after main function
+float sum(float a, float b){
+    return a + b;
+}
+
+void introduceMe(string name, int age){
+    cout << "My name is " << name << endl;
+    cout << "My age is " << age << endl;
+}
+
+void celebrateBirthday(int* age){
+    // function gets it own copy of the age and doesn't directly mutate the original
+    // when receiving pointer, in order to change the pointer's value instead of the address,
+    (*age)++; // deference the pointer. Access the val stored on that address. Then incremenet
+    cout << "AYEEE " << *age << " birthday." << endl;
 }
