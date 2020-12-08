@@ -17,23 +17,81 @@ void celebrateBirthday(int* age); // star symbol acccpets the pointer variable
 
 class Car {
     // In C++ by default, are properties of class are private. If you want to make it public, use public
-    public:
-        string Name;
+    // public:
+    private:
+        // string Name;
         string Color;
         double Price;
-    
+        // bool isBroken;
+
+    // in order to make these accessible outside of the class, you would have to maek it public. But instead, we want to make these accessbile from derived classes
+    // third access modifier: protected
+
+    protected:
+        string Name;
+        bool isBroken;
+
+    public:
     // create constructor. does not have return type. constructor has same name as class
     Car(string name, string color, double price){
         // assign declared vars to passed params;
         Name = name;
         Color = color;
         Price = price;
+        isBroken = false;
+    }
+
+    // method to manipulate a property of the class
+    void crashCar(){
+        cout << Name << " crashed" << endl;
+        isBroken = true;
+    }
+
+    void repairCar(){
+        cout << Name << " repaired" << endl;
+        isBroken = false;
+    }
+
+    void move(){
+        if(isBroken)
+            cout << Name << " is broken" << endl;
+        else 
+            cout << Name << " is driving" << endl;
     }
 
     void getInfo(){
         cout << "Name: " << Name << endl;
         cout << "Color: " << Color << endl;
         cout << "Price: " << Price << endl;
+    }
+};
+
+class FlyingCar :public Car { // syntax for inheriting from another class. Flying Car is the derived and the Car is the base class. Public is stating that whatever is public in the base, is also going to be public in the derived.
+    public:
+    FlyingCar(string name, string color, double price):Car(name,color,price){ // invoke Car constructor and passing the properties to it since it knows how instantiate it.
+
+    }
+
+    void move(){
+        if(isBroken)
+            cout << Name << " is broken" << endl;
+        else 
+            cout << Name << " is flying" << endl;
+    }
+};
+
+
+class UnderwaterCar :public Car { // syntax for inheriting from another class. Flying Car is the derived and the Car is the base class. Public is stating that whatever is public in the base, is also going to be public in the derived.
+    public:
+    UnderwaterCar(string name, string color, double price):Car(name,color,price){ // invoke Car constructor and passing the properties to it since it knows how instantiate it.
+
+    }
+
+    void move(){
+        if(isBroken)
+            cout << Name << " is broken" << endl;
+        else 
+            cout << Name << " is diving" << endl;
     }
 };
 
@@ -176,7 +234,27 @@ int main() {
     // Contructor method called automatically when instances of class is created
 
     // Class Methods = represent behavior of class which is basically function
-    myCar.getInfo();
+    // myCar.getInfo();
+    // THREE Most important characteristics of OOP are encapsulation, inheritance, and polymorphism
+    // Encapsulation => properties of class should NOT be public. User not be available to change as how they want. Create methods that user can invoke to change the data instead.
+    // myCar.move();
+    // myCar.crashCar();
+    myCar.move();
+    // Inheritance => In C++, can inherit properties and methods of a class to another
+    FlyingCar flyingCar("Sky Fury", "black", 500000);
+    // flyingCar.getInfo();
+    flyingCar.move();
+
+    // Polymorphism => ability of object to have multiple forms. What we should be able to do is to have the same method with the same name but different implementation
+    UnderwaterCar underwaterCar("Sea Storm", "blue", 60000);
+    underwaterCar.move();
+    // With poly, you have a pointer of the base class pointing to an object of derived class
+    // float variable = 5;
+    // int* intPtr = &variable;
+    Car* car1 = &flyingCar; // create a pointer
+    Car* car2 = &underwaterCar;
+    car1->crashCar(); // used when want to invoke a method using a pointer
+    car2->crashCar();
     return 0;
     // system("pause>0");
 }
