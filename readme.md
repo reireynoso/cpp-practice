@@ -174,6 +174,58 @@ void introduceMe(string name, int age){
 }
 ```
 
+## Function Overloading
+- `Function Overloading` create functions with the SAME name but functions will have different parameters
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int sum(int a, int b);
+double sum(double a, double b);
+float sum(float a, float b, float c);
+
+int main(){
+    cout << sum(4,3) << endl;
+    system("pause>0");
+}
+
+int sum(int a, int b){
+    int result = a + b;
+    return result;
+}
+
+double sum(double a, double b){
+    double result = a + b;
+    return result;
+}
+
+float sum(float a, float b, float c){
+    float result = a + b + c;
+    return result;
+}
+```
+
+## Generics function and templates
+- Use the same function but different data types
+```cpp
+#include <iostream>
+using namespace std;
+
+template<typename T>
+// created a template with generic type
+void Swap(T& a, T& b){
+    T temp = a;
+    a = b;
+    b = temp
+}
+
+int main(){
+    cout << sum(4,3) << endl;
+    system("pause>0");
+}
+
+```
 ## Pointers
 - POINTERS instead of storing a value itself, it stores address of a variable
 - Ex. an integer variable can store an integer number, a whole number. An integer pointer is going to store an address of an integer variable
@@ -211,6 +263,77 @@ void celebrateBirthday(int* age){
     cout << "AYEEE " << *age << " birthday." << endl;
 }
 ```
+
+## Pointers and Arrays
+
+```cpp
+#include <iostream>
+using namespace std;
+
+
+
+int main(){
+    int luckyNumbers[5];
+    for(int i = 0; i <=4; i++){
+        cout << "Number: ";
+        cin >> luckyNumbers[i];
+    }
+
+    for(int i = 0; i <=4; i++){
+        // if you try to iterate and access an element outside, it could reference another memory location space. for example. changing i limit to 5;
+        cout << *(luckyNumbers+i) << " "; // another of accessing elements using deferencing
+    }
+}
+```
+
+## Return Multiple values from a Function using Pointers
+- How to use pointers to return multiple values from function
+```cpp
+#include <iostream>
+using namespace std;
+
+int getMin(int numbers[], int size){
+    int min = numbers[0];
+
+    for(int i = 1; i < size; i++){
+        if(numbers[i] < min)
+            min = numbers[i];
+    }
+    return min;
+}
+
+int getMax(int numbers[], int size){
+    int max = numbers[0];
+
+    for(int i = 1; i < size; i++){
+        if(numbers[i] > max)
+            max = numbers[i];
+    }
+    return max;
+}
+
+void getMinandMax(int numbers[], int size, int*min, int*max){ // pointer to min and max
+    for(int i = 1; i < size; i++){
+        if(numbers[i] > *max) //dereference max
+            *max = numbers[i];
+        if(numbers[i] > *min) //dereference min
+            *min = numbers[i];
+    }
+}
+
+int main(){
+    int numbers[5]={5,4,-2,29,6};
+    // cout << "Min is " << getMin(numbers,5) << endl;
+    // cout << "Min is " << getMax(numbers,5) << endl;
+    int min = numbers[0];
+    int max = numbers[0];
+    getMinandMax(numbers,5,&min,&max); //address of min and max, passing a parameter using a reference => pass an address of a var to function rather than 
+    // passing value because if address is not passed, function is going to create a copy and whatever changes will only appear on that copy
+    system("pause>0");
+    return 0;
+}
+```
+
 
 ## Classes
 ```cpp
@@ -363,5 +486,114 @@ int main() {
     car2->crashCar();
     return 0;
     // system("pause>0");
+}
+```
+
+## Introduction to OOP: What are Classes and Objects?
+
+```cpp
+#include <iostream>
+#include <list>
+using namespace std;
+
+class YouTubeChannel {
+    public:
+        string Name;
+        string OwnerName;
+        int SubscribersCount;
+        list<string> PublishedVideoTitles;
+}
+
+int main(){
+    YouTubeChannel ytChannel;
+    ytChannel.Name = "Sample";
+    ytChannel.OwnerName = "Owner";
+    ytChannel.SubscriberCount = 1800;
+    ytChannel.PublishedVideoTitles = {"C++ for beginners Video 1", "HTML & CSS Video 1", "C++ OOP Video 1"};
+
+    cout << "Name" << ytChannel.Name << endl;
+    cout << "OwnerName" << ytChannel.OwnerName << endl;
+    cout << "SubscribersCount" << ytChannel.SubscribersCount << endl;
+    cout << "Videos" << ytChannel.Videos << endl;
+
+    for(string videoTitle : ytChannel.PublishedVideoTitles){
+        cout << videoTitle << endl;
+    }
+}
+```
+
+## OOP Constructors and Class Methods
+
+```cpp
+#include <iostream>
+#include <list>
+using namespace std;
+
+class YouTubeChannel {
+    public:
+        string Name;
+        string OwnerName;
+        int SubscribersCount;
+        list<string> PublishedVideoTitles;
+
+    //constructor method
+    YouTubeChannel(string name, string ownerName){
+        Name = name;
+        OwnerName = ownerName;
+        SubscribersCount = 0;
+    }
+
+    void getInfo(){
+        cout << "Name" << Name << endl;
+        cout << "OwnerName" << OwnerName << endl;
+        cout << "SubscribersCount" << SubscribersCount << endl;
+        cout << "Videos" << Videos << endl;
+
+        for(string videoTitle : PublishedVideoTitles){
+            cout << videoTitle << endl;
+        }
+    }
+}
+
+int main(){
+    YouTubeChannel ytChannel("Sample", "Owner");
+    ytChannel.PublishedVideoTitles.push_back("C++ for beginners Video 1") // push_back is method on list, to add to list
+    ytChannel.PublishedVideoTitles.push_back("HTML & CSS Video 1") 
+    ytChannel.PublishedVideoTitles.push_back("C++ OOP Video 1") 
+    // ytChannel.Name = "Sample";
+    // ytChannel.OwnerName = "Owner";
+    // ytChannel.SubscriberCount = 1800;
+    // ytChannel.PublishedVideoTitles = {"C++ for beginners Video 1", "HTML & CSS Video 1", "C++ OOP Video 1"};
+    ytChannel.getInfo();
+    
+}
+```
+
+## Dynamic Arrays, create/change arrays at runtime
+- size of array has to be known at compile time
+- allocate/deallocate memory => new/delete
+- every time you allocate new memmory, must deallocate
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+    int size;
+    cout << "Size: ";
+    cin >> size;
+    // int myArray[size];
+    int * myArray = new int [size];
+
+    for(int i = 0; i <<size; i++){
+        cout << "Array[" << i << "] ";
+        cin >> myArray[i];
+    }
+
+    for(int i = 0; i <<size; i++){
+        cout << myArray[i] << " ";
+    }
+
+    delete[]myArray;
+    myArray = NULL; // array will not point to address
 }
 ```
