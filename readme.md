@@ -208,12 +208,27 @@ float sum(float a, float b, float c){
 
 ## Generics function and templates
 - Use the same function but different data types
+- `generics` use same code but with different data types
+- should be able to pass type itself to a function so we should be abkle to determine which type we want that function to operate 
+- the way `generics` are implemented are using `templates`.
 ```cpp
 #include <iostream>
 using namespace std;
 
-template<typename T>
-// created a template with generic type
+// void Swap(int& a, int& b){
+//     int temp = a;
+//     a = b;
+//     b = temp;
+// }
+
+// void Swap(char& a, char& b){
+//     char temp = a;
+//     a = b;
+//     b = temp;
+// }
+
+template<typename T> // create a new type called T. It called generic data type
+// created a template with generic type. Now a generic function
 void Swap(T& a, T& b){
     T temp = a;
     a = b;
@@ -221,8 +236,19 @@ void Swap(T& a, T& b){
 }
 
 int main(){
-    cout << sum(4,3) << endl;
-    system("pause>0");
+    int a = 5, b = 7;
+    cout << a << " - " << b << endl;
+    Swap(a,b);
+    cout << a << " - " << b << endl;
+
+    // repeating code with function overloading to account for different data types
+    int c = 'a', d = 'b';
+    cout << c << " - " << d << endl;
+    Swap(c,d);
+    cout << c << " - " << d << endl;
+
+    // generics: idea is to use the same function logic but with different data types.
+    system("pcuse>0");
 }
 
 ```
